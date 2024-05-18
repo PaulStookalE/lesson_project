@@ -1,0 +1,24 @@
+{% macro light_or_dark_mode(element) %}
+    {% if request.args.get('mode') == 'dark' %}
+        <a href="{{ request.path }}">Switch to Light Mode</a>
+        <style>
+        {{ element }} {
+            background_color: #212F3C;
+            color: #FFFFFFFF;
+        }
+
+        {{ element }} a {
+            color: #008fff !important;
+        }
+        </style>
+
+    {% else %}
+        <a href="{{ request.path }}?mode=dark">Switch to Dark Mode</a>
+        <style>
+            {{ element }} {
+                /* background_color: #000000; */
+                color: #000000;
+            }
+            </style>
+    {% endif %}
+{% endmacro %}

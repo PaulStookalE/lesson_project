@@ -1,0 +1,37 @@
+<!-- Для того щоб створити базовий набір тегів -- ! + Tab -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+</head>
+<body>
+    <!-- Створюємо заголовок. -->
+    <h1>{{ header }}</h1>   
+    <!-- Створюємо основний текст. -->
+    <p>{{ description }}</p>
+
+    <!-- Створюємо таблицю. -->
+    <table>
+        <tr>
+            <!-- Тег <th> створює стовпчики таблиці. -->
+            <th>ID</th>
+            <th>Name</th>
+        </tr>
+        <!-- Підключаємо Jinja і ітеруємося по словнику datas. -->
+        {% for id, name in datas.items() %}
+            <tr>
+                <!-- Тег <td> створює рядки таблиці. -->
+                <td>{{ id }}</td>
+                <td>{{ name }}</td>
+            </tr>
+        
+        <!-- Завершуємо цикл. -->
+        {% endfor %}
+    </table>
+
+
+</body>
+</html>
