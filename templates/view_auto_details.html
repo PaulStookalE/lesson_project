@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Details about {{ auto_details.id }}
+{% endblock %}
+
+
+{% block content %}
+<!-- Створення таблиці з даними про конкретний автомобіль. -->
+    <div class="container">
+        <!-- Створення заголовку. -->
+        <h1 class="mt-5">Auto Details {{ auto_details.id }}</h1>
+
+        <table class="table table-striped mt-3">
+            <!-- Створення назв стовпців. -->
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Model name</th>
+                    <th>Engine</th>
+                    <th>Type of Fuel</th>
+    
+                </tr>
+            </thead>
+            
+            <!-- Заповнення стовпців даними. -->
+            <tbody>
+                <tr>
+                    <td>{{ auto_details.id }}</td>
+                    <td>{{ auto_details.model_name }}</td>
+                    <td>{{ auto_details.type_of_fuel }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Створення кнопки-посилання 'Back' для повернення назад на головну сторінку. -->
+        <a href="/view_all_autos_list" class="btn btn-secondary">Back to List</a>
+
+    </div>
+
+{% endblock %}

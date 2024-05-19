@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+    Edit Data of {{ auto.id }} 
+{% endblock %}
+
+
+{% block content %}
+    <!-- Створення форми з полями вводу для редагування даних про конкретний автомобіль. -->
+    <div class="container">
+        <h1 class="mt-5">Edit Data About Auto {{ auto.id }}</h1>
+
+        <form action="/edit_auto_data/{{ auto.id }}" method="post" class="mt-3">
+
+            <!-- Створення поля редагування моделі автомобіля. -->
+            <div class="mb-3">
+                <label for="model_name" class="form-label">Model Name</label>
+                <input class="form-control" type="text" id="model_name" name="model_name" value="{{ auto.model_name }}" required>
+                <!-- Параметр value заповнює поле вводу поточними даними із БД. -->
+            </div>
+
+            <!-- Створення поля редагування об'єму автомобіля. -->
+            <div class="mb-3">
+                <label for="engine" class="form-label">Engine</label>
+                <input class="form-control" type="text" id="engine" name="engine" value="{{ auto.engine }}" required>
+            </div>
+
+            <!-- Створення вибірки для редагування типів палива автомобіля. -->
+            <div class="mb-3">
+                <label for="type_of_fuel" class="form-label">Type of Fuel</label>
+                <select class="form-select" type="text" id="type_of_fuel" name="type_of_fuel" required>
+                    <!-- {% if auto.type_of_fuel.value == "Gasoline" %} selected {% endif %} -- визначає поточне значення цього поля у БД і вставляє його у вибірку як дефолтне. -->
+                    <option value="GASOLINE" {% if auto.type_of_fuel.value == "Gasoline" %} selected {% endif %}>Gasoline</option>
+                    <option value="DIESEL" {% if auto.type_of_fuel.value == "Diesel" %} selected {% endif %}>Diesel</option>
+                    <option value="GAS" {% if auto.type_of_fuel.value == "Gas" %} selected {% endif %}>Gas</option>
+                </select>
+            </div>
+
+            <!-- Створення кнопки для надсилання оновлених даних у Бек. -->
+            <button type="submit" class="btn btn-primary">Update Data</button>
+        </form>
+    </div>
+
+{% endblock %}

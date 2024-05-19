@@ -1,5 +1,5 @@
 from flask import redirect, render_template, request
-from models import session, Car
+from .models import session, Car
 from . import app
 from dotenv import load_dotenv
 import os
@@ -11,23 +11,24 @@ load_dotenv()
 
 
 
-# Створюємо сторінку, куди виводимо дані про машину.
-@app.route('/cars_list')
+# Створюємо сторінку для виведення списку всіх автомобілів.
+@app.route('/view_all_autos_list')
 def cars_list():
     cars = session.query(Car).all()
-    return render_template('cars.html', cars=cars)
+    return render_template('view_all_autos_list.html', cars=cars)
 
 
 
-# Створення функції, яка надсилатиме у FrontEnd 
+# Створення роуту для виведення даних про конкретний автомобіль.
 @app.route('/view_auto_details/<int:id>')
 def view_auto_details(id):
     auto_details = session.query(Car).get(id)
-    return render_template('auto_details.html', auto_details=auto_details)
+    return render_template('view_auto_details.html', auto_details=auto_details)
 
 
 
-@app.route('/create_data_about_auto', metods=['GET', 'POST'])
+# Створення роуту для додавання даних про новий автомобіль до БД.
+@app.route('/create_data_about_auto', methods=['GET', 'POST'])
 def create_data_about_auto():
     if request.method == 'POST':
         model_name = request.form['model_name']
@@ -58,6 +59,7 @@ def create_data_about_auto():
 
 
 
+# Створення роуту для редагування даних у БД.
 @app.route('/edit_auto_data/<int:id>', methods=['GET', 'POST'])
 def edit_auto_data(id):
     auto = session.query(Car).get(id)
@@ -77,19 +79,19 @@ def edit_auto_data(id):
         return redirect('/cars_list')
         
     else:
-        return render_template('edit_auto_data.html')
+        return render_template('edit_auto_data.html', auto=auto)
 
 
 
-
-@app.route('/delete_auto_data/<int:id>')
-def delete_auto_data(id):
-    auto_to_delete = session.query(Car).filter_by(id=id)
-    session.delete(auto_to_delete)
+# Створення роуту для видалення даних із БД.
+@app.route("/delete_auto_data/<int:id>")
+def delete_car(id):
+    auto_to_delete = session.query(Car).filter_by(id=id).first()
+    if auto_to_delete:
+        session.delete(auto_to_delete)
+        session.commit() 
     session.close()
-
-    return redirect('/cars_list')
-
+    return redirect("/view_all_autos_list")
 
 
 
