@@ -10,6 +10,11 @@ import requests
 load_dotenv()
 
 
+# Створення основного роуту.
+@app.route('/')
+def main():
+    return render_template('main.html', gratulation_text='Hi! This is a project for learning Flask!')
+
 
 # Створюємо сторінку для виведення списку всіх автомобілів.
 @app.route('/view_all_autos_list')
@@ -30,7 +35,9 @@ def view_auto_details(id):
 # Створення роуту для додавання даних про новий автомобіль до БД.
 @app.route('/create_data_about_auto', methods=['GET', 'POST'])
 def create_data_about_auto():
+
     if request.method == 'POST':
+
         model_name = request.form['model_name']
         engine = request.form['engine']
         type_of_fuel = request.form['type_of_fuel']
@@ -44,15 +51,14 @@ def create_data_about_auto():
         try:
             session.add(new_auto)
             session.commit()
-            return redirect('/cars_list')
+
+            return redirect('/view_all_autos_list')
         
         except Exception as exc:
             return exc
         
         finally:
             session.close()
-
-
 
     else:
         return render_template('create_data_about_auto.html')
@@ -65,18 +71,26 @@ def edit_auto_data(id):
     auto = session.query(Car).get(id)
 
     if request.method == 'POST':
-        model_name = request.form['model_name']
-        engine = request.form['engine']
-        type_of_fuel = request.form['type_of_fuel']
 
-        auto.model_name = model_name
-        auto.engine = engine
-        auto.type_of_fuel = type_of_fuel
+        try:
 
-        session.commit()
-        session.close()
+            model_name = request.form['model_name']
+            engine = request.form['engine']
+            type_of_fuel = request.form['type_of_fuel']
 
-        return redirect('/cars_list')
+            auto.model_name = model_name
+            auto.engine = engine
+            auto.type_of_fuel = type_of_fuel
+
+            session.commit()
+
+            return redirect('/view_all_autos_list')
+        
+        except Exception:
+            return render_template('edit_auto_data.html', auto=auto)
+        
+        finally:
+            session.close()
         
     else:
         return render_template('edit_auto_data.html', auto=auto)

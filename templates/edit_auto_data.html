@@ -31,13 +31,14 @@
                 <label for="type_of_fuel" class="form-label">Type of Fuel</label>
                 <select class="form-select" type="text" id="type_of_fuel" name="type_of_fuel" required>
                     <!-- {% if auto.type_of_fuel.value == "Gasoline" %} selected {% endif %} -- визначає поточне значення цього поля у БД і вставляє його у вибірку як дефолтне. -->
-                    <option value="GASOLINE" {% if auto.type_of_fuel.value == "Gasoline" %} selected {% endif %}>Gasoline</option>
-                    <option value="DIESEL" {% if auto.type_of_fuel.value == "Diesel" %} selected {% endif %}>Diesel</option>
-                    <option value="GAS" {% if auto.type_of_fuel.value == "Gas" %} selected {% endif %}>Gas</option>
+                    <option value="Gasoline" {% if auto.type_of_fuel.value == "Gasoline" %} selected {% endif %}>Gasoline</option>
+                    <option value="Diesel" {% if auto.type_of_fuel.value == "Diesel" %} selected {% endif %}>Diesel</option>
+                    <option value="Gas" {% if auto.type_of_fuel.value == "Gas" %} selected {% endif %}>Gas</option>
                 </select>
             </div>
 
-            <!-- Створення кнопки для надсилання оновлених даних у Бек. -->
+            
+            <a href="/view_all_autos_list" class="btn btn-info btn-sm">Back</a>
             <button type="submit" class="btn btn-primary">Update Data</button>
         </form>
     </div>
